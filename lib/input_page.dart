@@ -1,48 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'icon_content.dart';
+import 'reusable_card.dart';
 
 const double bottomContainerHeight = 80;
-const activeCardColor = Color(0xFF1C2033);
+const activeCardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF111328);
 const bottomContainerColor = Color(0xFFEB1555);
 
-class InputPage extends StatefulWidget {
-  const InputPage({super.key});
+enum Gender{male, female}
 
+
+class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
 
+
 class _InputPageState extends State<InputPage> {
+
+  Gender? selectedGender;
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BMI CALCULATOR'),
+        title: Text('BMI CALCULATOR'),
       ),
       body: Column(
         children: [
-          const Expanded(
+          Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(color: activeCardColor),
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
+                    },
+                    child: iconContent(icon: FontAwesomeIcons.mars, label: 'MALE',),
+                    color: selectedGender == Gender.male ? activeCardColor : inactiveCardColor,
+                  ),
                 ),
                 Expanded(
-                  child: ReusableCard(color: activeCardColor),
+                  child: ReusableCard(
+                    onPress: (){
+                      setState(() {
+                        selectedGender = Gender.female;
+                      });
+                    },
+                    child: iconContent(icon: FontAwesomeIcons.venus, label: 'FEMALE',),
+                    color: selectedGender == Gender.female ? activeCardColor : inactiveCardColor,
+                  ),
                 ),
               ],
             ),
           ),
-          const Expanded(
-            child: ReusableCard(color: activeCardColor),
+          Expanded(
+            child: ReusableCard(),
           ),
-          const Expanded(
+          Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(color: activeCardColor),
+                  child: ReusableCard(),
                 ),
                 Expanded(
-                  child: ReusableCard(color: activeCardColor),
+                  child: ReusableCard(),
                 ),
               ],
             ),
@@ -58,7 +88,7 @@ class _InputPageState extends State<InputPage> {
               height: bottomContainerHeight,
               child: const Center(
                 child: Text(
-                  'CALCULATE',
+                  'CALCULATE YOUR BMI',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -68,22 +98,6 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  final Color color;
-  const ReusableCard({super.key, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10),
       ),
     );
   }
